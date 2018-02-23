@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import './TodoList.css';
 import axios from 'axios';
+import moment from 'moment';
 
 class TodoList extends Component {
 
-    url = "http://localhost:7777/api/todos"
+    url = "http://localhost:7777/api/todos";
 
     constructor(props) {
         super(props);
@@ -19,9 +20,7 @@ class TodoList extends Component {
     }
 
     componentDidMount() {
-        console.log("We are mounted");
         axios.get(this.url).then((res) => {
-            console.log(res);
             this.setState({todos: res.data});
         }).catch(function (error) {
             console.log(error);
@@ -39,6 +38,7 @@ class TodoList extends Component {
                                     <label>
                                         <input />
                                         {todo.title}
+                                        {todo.completedAt && (<small> at {moment(todo.completeAt).format('MMM d, YYYY, h:mm:ss A')}</small>)}
                                     </label>
                                 </div>
                             </li>

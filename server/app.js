@@ -35,7 +35,7 @@ app.get('/api/todos', function(req, res) {
     res.json(todos);
 });
 
-app.post('/api/todos', function(req, resp) {
+app.post('/api/todos', function(req, res) {
     console.log("Saving Todo items");
     todos = req.body.todos;
     res.json(todos);
