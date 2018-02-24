@@ -15,8 +15,36 @@ class TodoList extends Component {
             todos: []
         };
 
-        // this.handleChange = this.setTitle.bind(this);
+        this.handleChange = this.setTitle.bind(this);
         // this.handleSubmit = this.addNewTodo.bind(this);
+    }
+
+
+    setTitle(e) {
+        this.setState({title: e.target.value});
+    }
+
+    setCompletion(idx, e) {
+        let isChecked = e.target.checked;
+        let todo = this.state.todos[idx];
+        // console.log(todo);
+        todo.isCompleted = isChecked;
+        if (isChecked) {
+            todo.completedAt = new Date();
+        } else {
+            todo.completedAt = null;
+        }
+
+        this.saveTodos();
+    }
+
+    saveTodos() {
+        console.log(this.state.todos);
+        axios.post(this.url, {todos: this.state.todos}).then((res) => {
+            this.setState({todos: res.data});
+        }).catch(function(error) {
+            console.log(error);
+        });
     }
 
     componentDidMount() {
@@ -29,16 +57,16 @@ class TodoList extends Component {
 
     render() {
         return (
-            <div className="TodoList">
+            <div className="TodoListContainer">
                 <ul className="TodoList">
                     {this.state.todos.map((todo, i) => {
                         return (
                             <li key={i}>
                                 <div className="TodoListItem">
                                     <label>
-                                        <input />
+                                        <input onChange={this.setCompletion.bind(this, i)} type="checkbox" checked={todo.isCompleted} />
                                         {todo.title}
-                                        {todo.completedAt && (<small> at {moment(todo.completeAt).format('MMM d, YYYY, h:mm:ss A')}</small>)}
+                                        {todo.completedAt && (<small> at {moment(todo.completedAt).format('MMM d, YYYY, h:mm:ss A')}</small>)}
                                     </label>
                                 </div>
                             </li>
