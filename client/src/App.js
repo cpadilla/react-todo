@@ -1,22 +1,34 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
-import TodoList from './components/TodoList/TodoList'
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
+import TodoList from './components/TodoList/TodoList';
+import Header from './components/header/header';
+import Homepage from './pages/homepage'
+import Products from './pages/products'
 import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        {/* <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p> */}
-        <h1>Chris's React To-Do List</h1>
-        <TodoList />
-      </div>
+      <Router>
+        <div className="App">
+
+          <Header />
+
+          <Route exact path='/' component={Homepage} />
+          <Route exact path='/Products' component={Products} />
+          <Route exact path='/TodoList' component={TodoList} />
+
+          {/* <TodoList /> */}
+
+
+
+        </div>
+      </Router>
     );
   }
 }

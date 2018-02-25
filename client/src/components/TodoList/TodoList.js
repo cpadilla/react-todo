@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './TodoList.css';
+import '../../assets/css/default.min.css'
 import axios from 'axios';
 import moment from 'moment';
 
@@ -19,6 +20,11 @@ class TodoList extends Component {
         // this.handleSubmit = this.addNewTodo.bind(this);
     }
 
+    clearTodos(e) {
+        this.setState({todos: []}, () => {
+            this.saveTodos();
+        })
+    }
 
     setTitle(e) {
         this.setState({title: e.target.value});
@@ -57,22 +63,42 @@ class TodoList extends Component {
 
     render() {
         return (
-            <div className="TodoListContainer">
-                <ul className="TodoList">
-                    {this.state.todos.map((todo, i) => {
-                        return (
-                            <li key={i}>
-                                <div className="TodoListItem">
-                                    <label>
-                                        <input onChange={this.setCompletion.bind(this, i)} type="checkbox" checked={todo.isCompleted} />
-                                        {todo.title}
-                                        {todo.completedAt && (<small> at {moment(todo.completedAt).format('MMM d, YYYY, h:mm:ss A')}</small>)}
-                                    </label>
-                                </div>
-                            </li>
-                        )
-                    })}
-                </ul>
+            <div>
+                <h1>Chris's React To-Do List</h1>
+                <div className="TodoListContainer">
+                    <ul className="TodoList">
+                        {this.state.todos.map((todo, i) => {
+                            return (
+                                <li key={i}>
+                                    <div className="TodoListItem">
+                                        <label>
+                                            <input onChange={this.setCompletion.bind(this, i)} type="checkbox" checked={todo.isCompleted} />
+                                            {todo.title}
+                                            {todo.completedAt && (<small> at {moment(todo.completedAt).format('MMM d, YYYY, h:mm:ss A')}</small>)}
+                                        </label>
+                                    </div>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                    <form>
+                        <input name="title"
+                                id="title"
+                                value={this.state.title}
+                                onChange={this.handleChange}/>
+                        <button className="Btn"
+                                type="submit"
+                                onClick={this.handleSubmit}> 
+                            Add New Todo
+                        </button>
+                    </form>
+
+                    <button
+                        className="Btn"
+                        onClick={this.clearTodos.bind(this)}>
+                        Clear Todos
+                    </button>
+                </div>
             </div>
         )
     }
