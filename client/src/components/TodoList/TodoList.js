@@ -17,7 +17,19 @@ class TodoList extends Component {
         };
 
         this.handleChange = this.setTitle.bind(this);
-        // this.handleSubmit = this.addNewTodo.bind(this);
+        this.handleSubmit = this.addNewTodo.bind(this);
+    }
+
+    addNewTodo(e) {
+        e.preventDefault();
+
+        let todo = {
+            title: this.state.title
+        };
+
+        this.setState({todos: this.state.todos.concat(todo)}, () => {
+            this.saveTodos();
+        })
     }
 
     clearTodos(e) {
